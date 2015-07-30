@@ -11,16 +11,23 @@ namespace StringCalculator
     {
         public string Add(string input)
         {
-            return "operator not supported";
+            if(String.IsNullOrEmpty(input))
+                return "operator not supported";
+
+            int sum = 0;
+            var extractedNumbers = input.Split('+');
+            for (int index = 0; index < extractedNumbers.Length; index++)
+            {
+                int tempValue;
+                if (IsValueInteger(extractedNumbers[index], out tempValue))
+                    sum += tempValue;
+            }
+            return sum.ToString();
         }
 
-        public List<int> ExtractNumbers(string input)
+        private bool IsValueInteger(string value, out int tempValue)
         {
-            List<int> integers = new List<int>();
-
-            var matchCollection = Regex.Matches(input, @"^-?\d+");
-
-            return integers;
+            return Int32.TryParse(value, out tempValue);
         }
     }
 }
